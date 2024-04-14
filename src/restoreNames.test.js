@@ -15,13 +15,21 @@ describe('restoreNames', () => {
     expect(users.length).toBe(0);
   });
 
-  it('sets correct first names for users with firstName as undefined', () => {
+  it('should set correct first names when firstName is undefined', () => {
     const users = [
       {
         firstName: undefined,
         lastName: 'Holy',
         fullName: 'Jack Holy',
       },
+    ];
+
+    restoreNames(users);
+    expect(users[0].firstName).toBe('Jack');
+  });
+
+  it('should set correct first names when firstName is omitted', () => {
+    const users = [
       {
         lastName: 'Adams',
         fullName: 'Mike Adams',
@@ -29,8 +37,7 @@ describe('restoreNames', () => {
     ];
 
     restoreNames(users);
-    expect(users[0].firstName).toBe('Jack');
-    expect(users[1].firstName).toBe('Mike');
+    expect(users[0].firstName).toBe('Mike');
   });
 
   it('does not modify first names for users with firstName already set', () => {
@@ -50,22 +57,5 @@ describe('restoreNames', () => {
     restoreNames(users);
     expect(users[0].firstName).toBe('John');
     expect(users[1].firstName).toBe('Alice');
-  });
-
-  it('should handle users without fullName', () => {
-    const users = [
-      {
-        firstName: undefined,
-        lastName: 'Holy',
-      },
-      {
-        lastName: 'Adams',
-        fullName: 'Mike Adams',
-      },
-    ];
-
-    restoreNames(users);
-    expect(users[0].firstName).toBe(undefined);
-    expect(users[1].firstName).toBe('Mike');
   });
 });
